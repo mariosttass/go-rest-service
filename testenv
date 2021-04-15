@@ -1,0 +1,5 @@
+export DBHOST=localhost
+export DBPORT=5432
+export DBUSER=you
+export DBPASS=pass
+export DBNAME=dbname

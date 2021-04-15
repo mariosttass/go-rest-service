@@ -1,0 +1,37 @@
+version: '2'
+services:
+  postgres:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./scripts/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - app
+
+  rest-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DBHOST: "localhost"
+      DBPORT: "5432"
+      DBUSER: "xxxxxxx"
+      DBPASS: "xxxxxxx"
+      DBNAME: "name"
+    ports:
+      - "9090:9090"
+      - "9010:9010"
+    depends_on:
+      - postgres
+    networks:
+      - app
+
+
+volumes:
+  postgres: {}
+
+networks:
+  app:
+    driver: bridge
